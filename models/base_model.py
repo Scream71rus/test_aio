@@ -1,0 +1,5 @@
+
+
+class BaseModel:
+    db = None
+

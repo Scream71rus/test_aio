@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>qwe</title>
+</head>
+<body>
+
+<input type="text" id="msg">
+<button onclick="send()">отправить</button>
+
+</body>
+<script>
+    var cookie_id = 1;
+    if ("WebSocket" in window) {
+        var ws = new WebSocket("ws://localhost:9090/ws?id=" + cookie_id);
+        ws.onopen = function () {
+            console.log("Connection is opened");
+            window.onload = function a() {
+                ws.send('Go to start!')
+            };
+        };
+        ws.onclose = function () {
+            console.log("Connection is closed");
+        };
+        ws.onmessage = function (msg) {
+            console.log(msg.data);
+        };
+    } else {
+        console.log('Your browser doenst support WebSocket!')
+    }
+    function send() {
+        msg = document.getElementById("msg").value;
+        ws.send(msg);
+        document.getElementById('msg').value = '';
+    }
+</script>
+
+</html>
